@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 19:54:21 by aramos            #+#    #+#             */
-/*   Updated: 2025/01/29 20:18:26 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/01 20:17:50 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef GET_NEXT_LINE_H
@@ -31,6 +31,8 @@ typedef struct s_list
 }	t_list;
 
 char	*get_next_line(int fd);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*read_from_fd(int fd, char *leftover);
 char	*ft_strdup(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 void	*ft_calloc(size_t nmemb, size_t size);
