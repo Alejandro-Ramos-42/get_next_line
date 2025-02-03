@@ -5,127 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 15:25:25 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/01 21:51:03 by alex             ###   ########.fr       */
+/*   Created: 2025/02/03 18:21:05 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/03 19:50:38 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <limits.h>
-#include <string.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stddef.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_create_node(t_list **current, t_list **start)
 {
-	char	*result;
-	size_t	len1;
-	size_t	len2;
+	t_list	*new_node;
 
-	if (!s1 || !s2)
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	result = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	ft_strlcpy(result, s1, len1 + 1);
-	ft_strlcpy(result + len1, s2, len2 + 1);
-	return (result);
-}
-
-int	search_line(char *str)
-{
-	int	i;
-
-	if(!str)
-		return(-1);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-char	*extract_line(char **leftover, char *buffer, int newline_i)
-{
-	char	*line;
-	int		i;
-
-	i = 0;
-	line = (char *)malloc(newline_i + 2);
-	if (!line)
-		return (NULL);
-	while (i <= newline_i)
-	{
-		line[i] = buffer[i];
-		i++;
-	}
-	line[i] = '\0';
-	if (buffer[newline_i + 1] == '\0')
-		*leftover = NULL;
+	new_node -> next = NULL;
+	if (*current == NULL)
+		*start = new_node;
 	else
-		*leftover = ft_strdup(buffer + newline_i + 1);
-	free(buffer);
-	return (line);
+		*current -> next = new_node;
+	*current = new_node;
+	return (0);
+
 }
 
-char	*read_from_fd(int fd, char *leftover)
+char	*get_next_line(fd)
 {
-	char	*buffer;
-	int		chars_read;
-	char	*temp;
-
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
-	if (read(fd, buffer, 0) < 0)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	chars_read = read(fd, buffer, BUFFER_SIZE);
-	if (chars_read <= 0)
-	{
-		free(buffer);
-		return (leftover);
-	}
-	buffer[chars_read] = '\0';
-	if (leftover)
-	{
-		temp = ft_strjoin(leftover, buffer);
-		free(leftover);
-		free(buffer);
-		return (temp);
-	}
-	return (buffer);
-}
-
-char	*get_next_line(int fd)
-{
-	static char	*leftover = NULL;
-	int			newline_i;
+	static t_list	*current = NULL;
+	t_list			*start;
+	char			*new_line_index;
+	ssize_t			copied;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (leftover)
+	while (1)
 	{
-		newline_i = search_line(leftover);
-		if (newline_i >= 0)
-			return (extract_line(&leftover, leftover, newline_i));
+		ft_create_node(&current, &start);
+		copied = read(fd, current -> buffer, BUFFER_SIZE);
+		if (copied < 0)
+		{
+			current = NULL;
+			return (NULL);
+		}
+		(current -> buffer)[copied] = '\0';
+		new_line_index = ft_strchr(current -> buffer, '\n');
 	}
-	leftover = read_from_fd(fd, leftover);
-	if (!leftover)
-		return(NULL);
-	newline_i = search_line(leftover);
-	if (newline_i >= 0)
-		return (extract_line(&leftover, leftover, newline_i));
-	return (leftover);
+	current = ft_
 }
