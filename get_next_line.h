@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:26 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/03 19:06:14 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/04 19:25:18 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 
 typedef struct s_list
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char			buffer[BUFFER_SIZE + 1];
 	struct s_list	*next;
+	int				nodes;
 }	t_list;
 
-char	*get_next_line(fd);
+char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 #endif

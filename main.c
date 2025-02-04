@@ -6,13 +6,14 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:25:55 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/03 18:30:16 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/04 18:13:54 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "get_next_line.h"
 
 int	main(void)
 {
