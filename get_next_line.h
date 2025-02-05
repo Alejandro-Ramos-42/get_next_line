@@ -18,12 +18,13 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 typedef struct s_list
 {
 	char			buffer[BUFFER_SIZE + 1];
 	struct s_list	*next;
-	int				nodes;
+	int				node_count;
 }	t_list;
 
 char	*get_next_line(int fd);

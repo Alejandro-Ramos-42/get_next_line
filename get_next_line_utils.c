@@ -12,14 +12,14 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)//"k\n123\0"
+char	*ft_strchr(const char *s, int c)
 {
 	if (s == NULL || c < 0)
 		return (NULL);
 	while (*s != '\0')
 	{
 		if (*s == (char)c)
-			return ((char *)s);//returns pointer to \n (index 1)
+			return ((char *)s);
 		s++;
 	}
 	if (*s == '\0' && c == '\0')
