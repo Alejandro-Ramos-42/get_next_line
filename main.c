@@ -21,7 +21,10 @@ int	main(void)
 	char	*str_returned;
 
 	fd = open("test.txt", O_RDONLY);
-	printf("%d", fd);
+	str_returned = get_next_line(fd);
+	printf("%s", str_returned);
+	str_returned = get_next_line(fd);
+	printf("%s", str_returned);
 	str_returned = get_next_line(fd);
 	printf("%s", str_returned);
 	close(fd);

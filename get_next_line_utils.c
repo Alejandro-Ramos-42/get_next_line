@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:37 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/04 19:52:23 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:46:06 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,26 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+	int		n;
+	int		i;
+
+	i = 0;
+	n = nmemb * size;
+	if (nmemb == 0 || size == 0)
+		return (malloc(1));
+	if (nmemb > (SIZE_MAX / size))
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	while (n > 0)
+	{
+		((unsigned char *)ptr)[i] = '\0';
+		n--;
+		i++;
+	}
+	return (ptr);
+}

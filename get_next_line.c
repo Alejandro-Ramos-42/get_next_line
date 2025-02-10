@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:05 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/04 19:52:22 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:47:14 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_create_node(t_list **current, t_list **start)
 {
 	t_list	*new_node;
 
-	new_node = malloc(sizeof(t_list));
+	new_node = calloc(1, sizeof(t_list));
 	if (!new_node)
 		return (0);
 	new_node -> next = NULL;
@@ -28,7 +28,7 @@ int	ft_create_node(t_list **current, t_list **start)
 	else
 	{
 		(*current)-> next = new_node;
-		new_node -> node_count = (*current)-> node_count + 1;
+		(*start)-> node_count = (*start)-> node_count + 1;
 	}
 	*current = new_node;
 	return (1);
@@ -55,14 +55,15 @@ t_list	*divorce(t_list *current, char *new_line_index)
 	if (!current || !new_line_index)
 		return (NULL);
 	i = 0;
-	brand_new = malloc(sizeof(t_list));
+	new_line_index++;
+	if (*new_line_index == '\0')
+		return (NULL);
+	brand_new = calloc(1, sizeof(t_list));
 	if (!brand_new)
 		return (NULL);
-	while (new_line_index[i])
+	while (new_line_index[i] != '\0')
 	{
 		(brand_new -> buffer)[i] = new_line_index[i];
-		if (i == 0)
-			new_line_index[i] = '\0';
 		i++;
 	}
 	brand_new -> buffer[i] = '\0';
@@ -80,20 +81,26 @@ char	*join_delete(t_list	**start)
 
 	i = 0;
 	str_len = ((*start)->node_count) * BUFFER_SIZE;
-	final_string = malloc((str_len + 1) * sizeof(char));
+	final_string = calloc((str_len + 1), sizeof(char));
 	if (!final_string)
-		return(NULL);
-	final_string[str_len] = '\0';
-	while (((*start)-> node_count) > 0)
+		return (NULL);
+	while (*start)
 	{
 		j = 0;
 		to_delete = *start;
-		while ((*start)-> buffer[j])
-			final_string[i++] = (*start)-> buffer[j++];
+		while ((*start)-> buffer[j] != '\0')
+		{
+			final_string[i++] = (*start)-> buffer[j];
+			if ((*start)-> buffer[j] == '\n')
+				break ;
+			j++;
+		}
 		*start = (*start)-> next;
 		free(to_delete);
-		((*start)-> node_count)--;
+		if (final_string[i - 1] == '\n')
+			break ;
 	}
+	final_string[i] = '\0';
 	return (final_string);
 }
 
@@ -120,7 +127,7 @@ char	*get_next_line(int fd)//3
 		(current -> buffer)[copied] = '\0';
 		new_line_index = ft_strchr(current -> buffer, '\n');
 	}
-	current = divorce(current, new_line_index + 1);
+	current = divorce(current, new_line_index);
 	line_to_return = join_delete(&start);
 	return (line_to_return);
 }
