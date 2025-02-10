@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:25:55 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/04 18:13:54 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:59:47 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ int	main(void)
 	fd = open("test.txt", O_RDONLY);
 	str_returned = get_next_line(fd);
 	printf("%s", str_returned);
+	free(str_returned);
 	str_returned = get_next_line(fd);
 	printf("%s", str_returned);
+	free(str_returned);
 	str_returned = get_next_line(fd);
 	printf("%s", str_returned);
+	free(str_returned);
 	close(fd);
 	return (0);
 }

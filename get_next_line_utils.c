@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:37 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/10 18:46:06 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 19:18:55 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,18 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		i++;
 	}
 	return (ptr);
+}
+
+void	*ft_fclean(t_list *current)
+{
+	t_list	*tmp;
+
+	while (current)
+	{
+		tmp = (current)->next;
+		free(current);
+		current = tmp;
+	}
+	return (NULL);
+	current = NULL;
 }

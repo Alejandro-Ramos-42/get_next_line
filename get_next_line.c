@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:05 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/10 18:47:14 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 19:51:16 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_create_node(t_list **current, t_list **start)
 
 	new_node = calloc(1, sizeof(t_list));
 	if (!new_node)
-		return (0);
+		return ((long)ft_fclean(*start));
 	new_node -> next = NULL;
 	if (*current == NULL)
 	{
@@ -91,9 +91,8 @@ char	*join_delete(t_list	**start)
 		while ((*start)-> buffer[j] != '\0')
 		{
 			final_string[i++] = (*start)-> buffer[j];
-			if ((*start)-> buffer[j] == '\n')
+			if ((*start)-> buffer[j++] == '\n')
 				break ;
-			j++;
 		}
 		*start = (*start)-> next;
 		free(to_delete);
@@ -119,10 +118,14 @@ char	*get_next_line(int fd)//3
 	{
 		ft_create_node(&current, &start);
 		copied = read(fd, current -> buffer, BUFFER_SIZE);
+		if (copied == 0)
+		{
+			break ;
+		}
 		if (copied < 0)
 		{
 			current = NULL;
-			return (NULL);
+			return (ft_fclean(start));
 		}
 		(current -> buffer)[copied] = '\0';
 		new_line_index = ft_strchr(current -> buffer, '\n');

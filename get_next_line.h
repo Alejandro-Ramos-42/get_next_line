@@ -6,7 +6,7 @@
 /*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:21:26 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/10 18:48:16 by aramos           ###   ########.fr       */
+/*   Updated: 2025/02/10 19:22:45 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ typedef struct s_list
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_fclean(t_list *current);
 #endif
