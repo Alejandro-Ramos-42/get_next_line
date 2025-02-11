@@ -32,4 +32,5 @@ char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_fclean(t_list *current);
+void  ft_putstr(char *str);
 #endif

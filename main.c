@@ -15,6 +15,23 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
+void  ft_putstr(char *str)
+{
+  int i;
+
+  i =0;
+  while (str[i])
+  {
+    if (str[i] == '\n')
+    {
+      write (1, "\\n", 2);
+    }
+    else
+      write(1, &str[i], 1);
+    i++;
+  }
+}
+
 int	main(void)
 {
 	int		fd;
@@ -22,14 +39,14 @@ int	main(void)
 
 	fd = open("test.txt", O_RDONLY);
 	str_returned = get_next_line(fd);
-	printf("%s", str_returned);
+	ft_putstr(str_returned);
 	free(str_returned);
 	str_returned = get_next_line(fd);
-	printf("%s", str_returned);
-	free(str_returned);
-	str_returned = get_next_line(fd);
-	printf("%s", str_returned);
-	free(str_returned);
+  ft_putstr(str_returned);
+//	free(str_returned);
+//	str_returned = get_next_line(fd);
+//	ft_putstr(str_returned);
+//	free(str_returned);
 	close(fd);
 	return (0);
 }

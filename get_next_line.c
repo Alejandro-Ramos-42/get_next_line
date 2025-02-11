@@ -68,6 +68,7 @@ t_list	*divorce(t_list *current, char *new_line_index)
 	}
 	brand_new -> buffer[i] = '\0';
 	brand_new -> next = NULL;
+	brand_new -> node_count = 1;
 	return (brand_new);
 }
 
@@ -91,8 +92,9 @@ char	*join_delete(t_list	**start)
 		while ((*start)-> buffer[j] != '\0')
 		{
 			final_string[i++] = (*start)-> buffer[j];
-			if ((*start)-> buffer[j++] == '\n')
+			if ((*start)-> buffer[j] == '\n')
 				break ;
+			j++;
 		}
 		*start = (*start)-> next;
 		free(to_delete);
@@ -103,7 +105,7 @@ char	*join_delete(t_list	**start)
 	return (final_string);
 }
 
-char	*get_next_line(int fd)//3
+char	*get_next_line(int fd)
 {
 	static t_list	*current = NULL;
 	t_list			*start;
@@ -118,6 +120,8 @@ char	*get_next_line(int fd)//3
 	{
 		ft_create_node(&current, &start);
 		copied = read(fd, current -> buffer, BUFFER_SIZE);
+//		if (current != NULL)
+//			ft_putstr(current -> buffer);
 		if (copied == 0)
 		{
 			break ;
