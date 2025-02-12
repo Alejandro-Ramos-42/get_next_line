@@ -34,7 +34,7 @@ int	ft_create_node(t_list **current, t_list **start)
 	return (1);
 }
 
-void	initiate_continue(char **new_line_index,
+static void	initiate_continue(char **new_line_index,
 				t_list **start, t_list *current, ssize_t *copied)
 {
 	*new_line_index = NULL;
@@ -43,7 +43,7 @@ void	initiate_continue(char **new_line_index,
 	if (current != NULL)
 	{
 		*start = current;
-		*new_line_index = (ft_strchr(current -> buffer, '\n'));
+		*new_line_index = ft_strchr(current -> buffer, '\n');
 	}
 }
 
@@ -54,16 +54,16 @@ t_list	*divorce(t_list *current, char *new_line_index)
 
 	if (!current || !new_line_index)
 		return (NULL);
-	i = 0;
-	new_line_index++;
-	if (*new_line_index == '\0')
-		return (NULL);
 	brand_new = calloc(1, sizeof(t_list));
 	if (!brand_new)
 		return (NULL);
+	i = 0;
+	new_line_index++;
 	while (new_line_index[i] != '\0')
 	{
 		(brand_new -> buffer)[i] = new_line_index[i];
+		if (i == 0)
+			new_line_index[i] = '\0';
 		i++;
 	}
 	brand_new -> buffer[i] = '\0';
@@ -118,14 +118,11 @@ char	*get_next_line(int fd)
 	initiate_continue(&new_line_index, &start, current, &copied);
 	while (copied >= 1 && new_line_index == NULL)
 	{
-		ft_create_node(&current, &start);
+		if (ft_create_node(&current, &start) == 0)
+			return (NULL);
 		copied = read(fd, current -> buffer, BUFFER_SIZE);
-//		if (current != NULL)
-//			ft_putstr(current -> buffer);
 		if (copied == 0)
-		{
 			break ;
-		}
 		if (copied < 0)
 		{
 			current = NULL;

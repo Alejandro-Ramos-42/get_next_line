@@ -12,41 +12,34 @@
 
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
 
-void  ft_putstr(char *str)
-{
-  int i;
-
-  i =0;
-  while (str[i])
-  {
-    if (str[i] == '\n')
-    {
-      write (1, "\\n", 2);
-    }
-    else
-      write(1, &str[i], 1);
-    i++;
-  }
-}
+//void  ft_putstr(char *str)
+//{
+//  int i;
+//
+//  i =0;
+//  while (str[i])
+//  {
+//    if (str[i] == '\n')
+//    {
+//      write (1, &str[i], 1);
+//    }
+//    else
+//      write(1, &str[i], 1);
+//    i++;
+//  }
+//}
 
 int	main(void)
 {
 	int		fd;
-	char	*str_returned;
 
-	fd = open("test.txt", O_RDONLY);
-	str_returned = get_next_line(fd);
-	ft_putstr(str_returned);
-	free(str_returned);
-	str_returned = get_next_line(fd);
-  ft_putstr(str_returned);
-//	free(str_returned);
-//	str_returned = get_next_line(fd);
-//	ft_putstr(str_returned);
-//	free(str_returned);
+  fd = open("test.txt", O_RDONLY);
+  printf("%s", get_next_line(fd));
+  printf("FD: %d", fd);
 	close(fd);
 	return (0);
 }

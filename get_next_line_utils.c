@@ -61,6 +61,6 @@ void	*ft_fclean(t_list *current)
 		free(current);
 		current = tmp;
 	}
-	return (NULL);
 	current = NULL;
+	return (NULL);
 }
