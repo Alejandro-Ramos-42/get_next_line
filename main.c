@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
-
+//
 //void  ft_putstr(char *str)
 //{
 //  int i;
@@ -25,7 +25,11 @@
 //  {
 //    if (str[i] == '\n')
 //    {
-//      write (1, &str[i], 1);
+//      write (1, "\\n", 2);
+//    }
+//    if (str[i] == '\0')
+//    {
+//      write (1, "\\0", 2);
 //    }
 //    else
 //      write(1, &str[i], 1);
@@ -35,11 +39,13 @@
 
 int	main(void)
 {
-	int		fd;
+	int	fd;
+	int	lines;
 
-  fd = open("test.txt", O_RDONLY);
-  printf("%s", get_next_line(fd));
-  printf("FD: %d", fd);
+	fd = open("test.txt", O_RDONLY);
+	lines = 14;
+	while (lines-- > 0)
+		printf("%s", get_next_line(fd));
 	close(fd);
 	return (0);
 }
