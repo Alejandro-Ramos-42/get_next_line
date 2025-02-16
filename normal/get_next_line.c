@@ -24,15 +24,9 @@ int	ft_create_node(t_list **current, t_list **start)
 	}
 	new_node -> next = NULL;
 	if (*current == NULL)
-	{
 		*start = new_node;
-		new_node -> node_count = 1;
-	}
 	else
-	{
 		(*current)-> next = new_node;
-		(*start)-> node_count += 1;
-	}
 	*current = new_node;
 	return (1);
 }
@@ -83,7 +77,7 @@ char	*join_delete(t_list	*start)
 	int		str_len;
 
 	to_delete = start;
-	str_len = ft_lstlen(start);
+	str_len = ft_final_len(start);
 	if (str_len <= 0)
 		return (ft_fclean(to_delete));
 	final_string = (char *)malloc(str_len + 1 * sizeof(char));

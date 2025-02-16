@@ -41,7 +41,7 @@ void	*ft_fclean(t_list *start)
 	return (NULL);
 }
 
-int	ft_lstlen(t_list *lst)
+int	ft_final_len(t_list *lst)
 {
 	int	size;
 
