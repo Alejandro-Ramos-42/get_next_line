@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_create_node(t_list **current, t_list **start)
 {
@@ -23,25 +23,13 @@ int	ft_create_node(t_list **current, t_list **start)
 		return (0);
 	}
 	new_node -> next = NULL;
+	new_node -> buffer[0] = '\0';
 	if (*current == NULL)
 		*start = new_node;
 	else
 		(*current)-> next = new_node;
 	*current = new_node;
 	return (1);
-}
-
-static void	initiate_continue(char **new_line_index,
-				t_list **start, t_list *current, ssize_t *copied)
-{
-	*new_line_index = NULL;
-	*start = NULL;
-	*copied = 1;
-	if (current != NULL)
-	{
-		*start = current;
-		*new_line_index = ft_strchr(current -> buffer, '\n');
-	}
 }
 
 t_list	*divorce(t_list *current, char *new_line_index)
@@ -97,29 +85,42 @@ char	*join_delete(t_list	*start)
 	return (final_string);
 }
 
+static void	initiate_continue(char **new_line_index,
+				t_list **start, t_list *current, ssize_t *copied)
+{
+	*new_line_index = NULL;
+	*start = NULL;
+	*copied = 1;
+	if (current != NULL)
+	{
+		*start = current;
+		*new_line_index = ft_strchr(current -> buffer, '\n');
+	}
+}
+
 char	*get_next_line(int fd)
 {
-	static t_list	*current = NULL;
+	static t_list	*current[1024];
 	t_list			*start;
 	char			*new_line_index;
 	ssize_t			copied;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	initiate_continue(&new_line_index, &start, current, &copied);
+	initiate_continue(&new_line_index, &start, current[fd], &copied);
 	while (copied > 0 && new_line_index == NULL)
 	{
-		if (ft_create_node(&current, &start) == 0)
+		if (ft_create_node(&current[fd], &start) == 0)
 			return (NULL);
-		copied = read(fd, current -> buffer, BUFFER_SIZE);
+		copied = read(fd, current[fd]-> buffer, BUFFER_SIZE);
 		if (copied < 0)
 		{
-			current = NULL;
+			current[fd] = NULL;
 			return (ft_fclean(start));
 		}
-		(current -> buffer)[copied] = '\0';
-		new_line_index = ft_strchr(current -> buffer, '\n');
+		(current[fd]-> buffer)[copied] = '\0';
+		new_line_index = ft_strchr(current[fd]-> buffer, '\n');
 	}
-	current = divorce(current, new_line_index);
+	current[fd] = divorce(current[fd], new_line_index);
 	return (join_delete(start));
 }

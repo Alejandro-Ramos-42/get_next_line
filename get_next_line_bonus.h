@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <stdint.h>
 
 typedef struct s_list
 {
 	char			buffer[BUFFER_SIZE + 1];
 	struct s_list	*next;
+	int				fd;
 }	t_list;
 
 char	*get_next_line(int fd);
@@ -34,4 +34,5 @@ void	*ft_fclean(t_list *current);
 void	ft_putstr(char *str);
 int		ft_final_len(t_list *lst);
 int		ft_strlen(char *str);
+t_list	*find_fd(t_list **current, int fd);
 #endif

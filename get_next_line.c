@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_create_node(t_list **current, t_list **start, int fd)
+int	ft_create_node(t_list **current, t_list **start)
 {
 	t_list	*new_node;
 
@@ -23,14 +23,25 @@ int	ft_create_node(t_list **current, t_list **start, int fd)
 		return (0);
 	}
 	new_node -> next = NULL;
-	new_node -> fd = fd;
-	new_node -> buffer[0] = '\0';
 	if (*current == NULL)
 		*start = new_node;
 	else
 		(*current)-> next = new_node;
 	*current = new_node;
 	return (1);
+}
+
+static void	initiate_continue(char **new_line_index,
+				t_list **start, t_list *current, ssize_t *copied)
+{
+	*new_line_index = NULL;
+	*start = NULL;
+	*copied = 1;
+	if (current != NULL)
+	{
+		*start = current;
+		*new_line_index = ft_strchr(current -> buffer, '\n');
+	}
 }
 
 t_list	*divorce(t_list *current, char *new_line_index)
@@ -86,35 +97,6 @@ char	*join_delete(t_list	*start)
 	return (final_string);
 }
 
-static void	initiate_continue(char **new_line_index,
-				t_list **start, t_list *current, ssize_t *copied)
-{
-	*new_line_index = NULL;
-	*start = NULL;
-	*copied = 1;
-	if (current != NULL)
-	{
-		*start = current;
-		*new_line_index = ft_strchr(current -> buffer, '\n');
-	}
-}
-
-t_list	*find_fd(t_list **current, int fd)
-{
-	t_list	*temp;
-
-	if (!*current)
-		return (NULL);
-	temp = *current;
-	while (temp)
-	{
-		if (temp -> fd == fd)
-			return (temp);
-		temp = temp -> next;
-	}
-	return (NULL);
-}
-
 char	*get_next_line(int fd)
 {
 	static t_list	*current = NULL;
@@ -124,15 +106,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!find_fd(&current, fd))
-	{
-		if (ft_create_node(&current, &start, fd) == 0)
-			return (NULL);
-	}
 	initiate_continue(&new_line_index, &start, current, &copied);
 	while (copied > 0 && new_line_index == NULL)
 	{
-		if (ft_create_node(&current, &start, fd) == 0)
+		if (ft_create_node(&current, &start) == 0)
 			return (NULL);
 		copied = read(fd, current -> buffer, BUFFER_SIZE);
 		if (copied < 0)
