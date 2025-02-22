@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 18:21:37 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/10 19:18:55 by aramos           ###   ########.fr       */
+/*   Created: 2025/02/22 10:21:02 by Alejandro Ram     #+#    #+#             */
+/*   Updated: 2025/02/22 10:21:35 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 18:21:26 by aramos            #+#    #+#             */
-/*   Updated: 2025/02/10 19:22:45 by aramos           ###   ########.fr       */
+/*   Created: 2025/02/22 10:23:55 by Alejandro Ram     #+#    #+#             */
+/*   Updated: 2025/02/22 10:23:57 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
@@ -24,7 +24,6 @@ typedef struct s_list
 {
 	char			buffer[BUFFER_SIZE + 1];
 	struct s_list	*next;
-	int				fd;
 }	t_list;
 
 char	*get_next_line(int fd);
@@ -34,5 +33,4 @@ void	*ft_fclean(t_list *current);
 void	ft_putstr(char *str);
 int		ft_final_len(t_list *lst);
 int		ft_strlen(char *str);
-t_list	*find_fd(t_list **current, int fd);
 #endif
